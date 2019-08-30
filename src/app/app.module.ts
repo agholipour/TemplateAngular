@@ -12,22 +12,28 @@ import { ProductListComponent } from './prodcts/product-list.component';
 import { ProductEditComponent } from './prodcts/product-edit.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { DemoMaterialModule } from './shared/material-module';
+import { PanelComponent } from './shared/panel/panel.component';
+import { MyBootstrapModule } from './shared/bootstrap.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    PanelComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
     BrowserAnimationsModule, // required animations module
+    MyBootstrapModule,
     ToastrModule.forRoot(), // ToastrModule added
-    InMemoryWebApiModule.forRoot(ProductData,{delay:2000}),
+    DemoMaterialModule,
+    InMemoryWebApiModule.forRoot(ProductData,{delay:5000}),
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent },
       { path: 'products/:id/edit', component: ProductEditComponent },

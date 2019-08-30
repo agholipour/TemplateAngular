@@ -1,0 +1,16 @@
+<div class='card'>
+    <div class='heading card-header'>
+        {{pageTitle}}
+    </div>
+    <div *ngIf='errorMessage'  class='alert alert-danger'>
+            Error: {{ errorMessage }}
+    </div>
+    <div class="card-body">
+        <ng-content select=".body"></ng-content>
+    </div>
+</div>
+
+<div *ngIf="loading" class="loading-indicator">
+    <mat-spinner>
+   </mat-spinner>
+ </div>

@@ -25,7 +25,7 @@ export class ProductEditComponent  extends AbstractEdit implements OnInit , OnDe
     protected productService: ProductService,
     protected toastr: ToastrService
   ) {
-    super(formBuilder, route, toastr);
+    super(formBuilder, route, toastr,'Product Edit');
      // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
@@ -50,9 +50,7 @@ export class ProductEditComponent  extends AbstractEdit implements OnInit , OnDe
 
  ngOnInit(): void {
     this.form = this.formBuilder.group({
-      productName: ['', [Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(50)]],
+      productName: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       description: ''
     });
@@ -70,14 +68,14 @@ export class ProductEditComponent  extends AbstractEdit implements OnInit , OnDe
     this.productService.getProduct(id)
       .subscribe(
         (product: Product) => this.onRetrieved(product),
-        (error: any) => this.errorMessage = <any>error
+        (error: any) =>  this.handleError(error)
       );
   }
   
   onRetrieved(product: Product): void {
     if (this.form) {
-              this.form.reset();
-            }
+      this.form.reset();
+    }
     this.product = product;
     // Update the data on the form
     this.form.patchValue({
@@ -85,6 +83,8 @@ export class ProductEditComponent  extends AbstractEdit implements OnInit , OnDe
       productCode: this.product.productCode,
       description: this.product.description
     });
+    this.loading=false;
+
   }
 
   ngOnDestroy(): void {
@@ -96,6 +96,9 @@ export class ProductEditComponent  extends AbstractEdit implements OnInit , OnDe
   }
   protected save(): void {
     throw new Error("Method not implemented.");
+  }
+  saveProduct(): void{
+
   }
   protected onSaveComplete(): void {
     throw new Error("Method not implemented.");

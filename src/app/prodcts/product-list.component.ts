@@ -11,11 +11,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductListComponent extends AbstractIndexComponent implements OnInit {
 
-  pageTitle = 'Product List';
   imageWidth = 50;
   imageMargin = 2;
   showImage = false;
-  errorMessage = '';
 
   _listFilter = '';
   get listFilter(): string {
@@ -50,9 +48,10 @@ export class ProductListComponent extends AbstractIndexComponent implements OnIn
       products => {
         this.products = products;
         this.filteredProducts = this.products;
-      },
-      error => this.errorMessage = <any>error
-    );
+        this.loading=false;
+      }, (error) => {
+        this.handleError(error);
+      });
   }
 
 }

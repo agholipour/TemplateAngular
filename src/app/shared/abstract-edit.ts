@@ -9,31 +9,23 @@ import { BaseDomain } from '../prodcts/base-domain';
 export abstract class AbstractEdit  {
     protected genericValidator: GenericValidator;
     protected validationMessages: { [key: string]: { [key: string]: string } };
-    protected form: FormGroup;
+    form: FormGroup;
+    protected loading: boolean = true;
+    protected errorMessage = '';
 
     constructor(
         protected formBuilder: FormBuilder,
         protected route: ActivatedRoute,
-        protected toastr: ToastrService
+        protected toastr: ToastrService,
+        protected entityName: string
       ) {
         // empty
       }
 
       public handleError(error): any {
-        let message = '';
-    
-        if (error.json) {
-          error = error.json();
-        }
-    
-        if (typeof error['message'] !== 'undefined') {
-          message = error.message;
-        } else if (typeof error['messages']['error'] !== 'undefined') {
-          message = error.messages.error.map((e) => e.message).join(', ');
-        }
-    
-        return this.toastr.error(message, 'Error');
-      }
+        this.loading = false;
+        this.errorMessage = error;
+     }
 
       protected abstract buildForm(): void;
 

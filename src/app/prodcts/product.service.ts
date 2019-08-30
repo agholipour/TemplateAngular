@@ -11,7 +11,7 @@ import { Product } from './product';
   providedIn: 'root',
 })
 export class ProductService implements DataService<Product>{
-  private productsUrl = 'api/products';
+  private productsUrl = 'api/product';
 
   constructor(private http: HttpClient) { }
 

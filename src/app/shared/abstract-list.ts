@@ -4,7 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 export abstract class AbstractIndexComponent  {
     protected loading: boolean = true;
     protected data: any;
-  
+    protected errorMessage = '';
+
     constructor(
         protected dataService: DataService<any>,
         protected toastr: ToastrService,
@@ -15,16 +16,7 @@ export abstract class AbstractIndexComponent  {
 
     public handleError(error): any {
         this.loading = false;
-        let message = '';
-        if (error.json) {
-          error = error.json();
-        }
-        if (typeof error['message'] !== 'undefined') {
-          message = error.message;
-        } else if (typeof error['messages']['error'] !== 'undefined') {
-          message = error.messages.error.map((e) => e.message).join(', ');
-        }
-        return this.toastr.error(message, 'Error');
+        this.errorMessage = error;
      }
 
 }
